@@ -1,20 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import ContactListScreen from './screens/ContactListScreen';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Ekta Singh.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <ContactListScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

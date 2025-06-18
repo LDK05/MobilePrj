@@ -1,0 +1,58 @@
+export default [
+  {
+    id: '1',
+    name: 'John Smith',
+    phone: '02 9988 2211',
+    department: 1,
+    address: '1 Code Lane, Javaville, NSW 0100, Australia',
+  },
+  {
+    id: '2',
+    name: 'Sue White',
+    phone: '03 8899 2255',
+    department: 2,
+    address: '16 Bit Way, Byte Cove, QLD 1101, Australia',
+  },
+  {
+    id: '3',
+    name: 'Bob O’Bits',
+    phone: '05 7788 2255',
+    department: 3,
+    address: '8 Silicon Road, Cloud Hills, VIC 1001, Australia',
+  },
+  {
+    id: '4',
+    name: 'Mary Blue',
+    phone: '06 4455 9988',
+    department: 2,
+    address: '4 Processor Boulevard, Appletson, NT 1010, Australia',
+  },
+  {
+    id: '5',
+    name: 'Mick Green',
+    phone: '02 9988 1122',
+    department: 3,
+    address: '700 Bandwidth Street, Bufferland, NSW 0110, Australia',
+  },
+   {
+    id: '6',
+    name: 'Bob O’Bits',
+    phone: '05 7788 2255',
+    department: 3,
+    address: '8 Silicon Road, Cloud Hills, VIC 1001, Australia',
+  },
+  {
+    id: '7',
+    name: 'Mary Blue',
+    phone: '06 4455 9988',
+    department: 2,
+    address: '4 Processor Boulevard, Appletson, NT 1010, Australia',
+  },
+  {
+    id: '8',
+    name: 'Mick Green',
+    phone: '02 9988 1122',
+    department: 3,
+    address: '700 Bandwidth Street, Bufferland, NSW 0110, Australia',
+  },
+];
