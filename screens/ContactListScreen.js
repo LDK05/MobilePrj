@@ -23,6 +23,7 @@ export default function ContactListScreen() {
   const [selected, setSelected] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editContact, setEditContact] = useState(null); // <-- Add this line
 
   const { width } = useWindowDimensions();
   const isTablet = width >= 768;          
@@ -30,20 +31,40 @@ export default function ContactListScreen() {
   const handleAddContact = () => {
     setMenuVisible(false);
     setShowAddForm(true);
+    setEditContact(null); // <-- Reset editContact when adding
   };
 
   const handleSaveContact = (newContact) => {
-    setContacts([...contacts, newContact]);
+    if (editContact) {
+      // Edit mode: update contact
+      setContacts(contacts.map(c => c.id === newContact.id ? newContact : c));
+    } else {
+      // Add mode: add new contact
+      setContacts([...contacts, newContact]);
+    }
     setShowAddForm(false);
+    setEditContact(null);
+    setSelected(null);
   };
 
   const handleCancelForm = () => {
     setShowAddForm(false);
+    setEditContact(null);
+  };
+
+  const handleEditContact = (contact) => {
+    setEditContact(contact);
+    setShowAddForm(true);
+    setSelected(null);
   };
 
   if (showAddForm) {
     return (
-      <ContactForm onSave={handleSaveContact} onCancel={handleCancelForm} />
+      <ContactForm
+        initialContact={editContact || {}}
+        onSave={handleSaveContact}
+        onCancel={handleCancelForm}
+      />
     );
   }
 
@@ -55,6 +76,7 @@ export default function ContactListScreen() {
         contact={selected}
         department={dept}
         onBack={() => setSelected(null)}
+        onEdit={handleEditContact} // <-- Pass edit handler
       />
     );
   }

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { colors, fonts } from "../theme/roiTheme";
 import Header from "../components/Header";
 
-export default function ContactDetails({ contact, department, onBack }) {
+export default function ContactDetails({ contact, department, onBack, onEdit }) {
   return (
     <View style={styles.container}>
       <Header onMenuPress={() => {}} />
@@ -21,6 +21,9 @@ export default function ContactDetails({ contact, department, onBack }) {
           <Text style={styles.detailLabel}>Address:</Text>
           <Text style={styles.detailValue}>{contact.address}</Text>
         </View>
+        <TouchableOpacity style={styles.editButton} onPress={() => onEdit(contact)}>
+          <Text style={styles.editButtonText}>Edit</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.backButton} onPress={onBack}>
           <Text style={styles.backButtonText}>Back to List</Text>
         </TouchableOpacity>
@@ -75,6 +78,24 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: "wrap",
     letterSpacing: 0.1,
+  },
+  editButton: {
+    marginTop: 8,
+    backgroundColor: colors.roiCharcoal,
+    paddingVertical: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    shadowColor: "#333",
+    shadowOpacity: 0.12,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  editButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "Trebuchet MS, Calibri, Arial",
+    fontSize: 18,
+    letterSpacing: 1,
   },
   backButton: {
     marginTop: 36,
