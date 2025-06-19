@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,23 +9,34 @@ import {
   Platform,
   FlatList,
   Pressable,
-  Alert, 
+  Alert,
 } from "react-native";
 import { colors, fonts } from "../theme/roiTheme";
 import Header from "../components/Header";
-import departments from "../data/departments";
+import { getDepartments } from "../api/contactApi";
 
 export default function ContactForm({ initialContact = {}, onSave, onCancel }) {
   const [name, setName] = useState(initialContact.name || "");
+  const [departments, setDepartments] = useState([]); // Initialize as empty array
   const [phone, setPhone] = useState(initialContact.phone || "");
   const [department, setDepartment] = useState(
-    initialContact.department || departments[0].id
+    initialContact.department || departments[0]?.id || ""
   );
   const [departmentQuery, setDepartmentQuery] = useState(
     departments.find((d) => d.id === (initialContact.department || departments[0].id))?.name || ""
   );
   const [address, setAddress] = useState(initialContact.address || "");
   const [showDeptSuggestions, setShowDeptSuggestions] = useState(false);
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      const departments = await getDepartments();
+      setDepartments(departments);
+      setDepartmentQuery(
+        departments.find((d) => d.id === (initialContact.department || departments[0].id))?.name || ""
+      );
+    };
+    fetchDepartments();
+  }, []);
 
   const handleSave = () => {
     if (!name || !phone || !address) return;
@@ -36,7 +47,7 @@ export default function ContactForm({ initialContact = {}, onSave, onCancel }) {
       department,
       address,
     });
-    Alert.alert("Success", "Contact added successfully!"); // <-- Confirmation message
+    Alert.alert("Success", "Contact added successfully!");
   };
 
   // Filter departments for autocomplete
@@ -57,7 +68,7 @@ export default function ContactForm({ initialContact = {}, onSave, onCancel }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
-      <Header onMenuPress={() => {}} />
+      <Header onMenuPress={() => { }} />
       <FlatList
         data={[{}]}
         keyExtractor={() => "form"}

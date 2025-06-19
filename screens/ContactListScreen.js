@@ -1,32 +1,32 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    FlatList,
-    Modal,
-    Pressable,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View
+  FlatList,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View
 } from "react-native";
 import ContactCard from "../components/ContactCard";
 import Header from "../components/Header";
-import contactsData from "../data/contacts";
 import departments from "../data/departments";
 import { colors, fonts } from "../theme/roiTheme";
 import ContactDetails from "./ContactDetails";
+import { addContact, editExistingContact, fetchContactData } from "../api/contactApi";
 import ContactForm from "./ContactForm";
 
 export default function ContactListScreen() {
-  const [contacts, setContacts] = useState(contactsData);
+  const [contacts, setContacts] = useState([]); // Initialize as empty array
   const [selected, setSelected] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editContact, setEditContact] = useState(null); // <-- Add this line
 
   const { width } = useWindowDimensions();
-  const isTablet = width >= 768;          
+  const isTablet = width >= 768;
 
   const handleAddContact = () => {
     setMenuVisible(false);
@@ -34,17 +34,24 @@ export default function ContactListScreen() {
     setEditContact(null); // <-- Reset editContact when adding
   };
 
+  const fetchContacts = () => {
+    fetchContactData().then(setContacts);
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
   const handleSaveContact = (newContact) => {
     if (editContact) {
-      // Edit mode: update contact
-      setContacts(contacts.map(c => c.id === newContact.id ? newContact : c));
+      editExistingContact(newContact);
     } else {
-      // Add mode: add new contact
-      setContacts([...contacts, newContact]);
+      addContact(newContact);
     }
     setShowAddForm(false);
     setEditContact(null);
     setSelected(null);
+    fetchContacts(); // Refresh the contact list after saving
   };
 
   const handleCancelForm = () => {

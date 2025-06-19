@@ -6,7 +6,7 @@ import Header from "../components/Header";
 export default function ContactDetails({ contact, department, onBack, onEdit }) {
   return (
     <View style={styles.container}>
-      <Header onMenuPress={() => {}} />
+      <Header onMenuPress={() => { }} />
       <View style={styles.card}>
         <Text style={styles.detailName}>{contact.name}</Text>
         <View style={styles.infoRow}>
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.roiGrey,
     fontFamily: "Trebuchet MS, Calibri, Arial",
-    flex: 1,
-    flexWrap: "wrap",
+    flexShrink: 1,
+    flexBasis: "100%",
     letterSpacing: 0.1,
   },
   editButton: {
